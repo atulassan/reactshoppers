@@ -14,12 +14,14 @@ import Product from "../Components/Main/Product";
 import Contact from "../Components/Main/Contact";
 //import Cart from "../Components/Main/Cart";
 import CartNew from "../Components/Main/CartNew";
+import WishList from "../Components/Main/WishList";
 import Register from "../Components/Main/Register";
 import Login from "../Components/Main/Login";
 import Myaccount from "../Components/Main/Myaccount";
 import NotFound from "../Components/Main/NotFound";
 import ReduxExample from "../Components/Main/ReduxExample";
 import FormBuilder from "../Components/Main/FormBuilder";
+import ShopInfiniteScroll from "../Components/Main/ShopInfiniteScroll";
 
 const Routes = (props) => {
   console.log(props);
@@ -36,7 +38,9 @@ const Routes = (props) => {
         <PublicRoute {...props} path="/login" component={Login} />
         <PrivateRoute {...props} path="/myaccount" component={Myaccount} />
         <Route path="/cart" component={CartNew} />
+        <Route path="/wishlist" component={WishList} />
         <Route path="/reduxexample" component={ReduxExample} />
+        <Route path="/shopinfinitescroll" component={ShopInfiniteScroll} />
         <Route path="/contact" component={Contact} />
         <Route path="/formbuilder" component={FormBuilder} />
         <Route component={NotFound} /> 

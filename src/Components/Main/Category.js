@@ -7,6 +7,8 @@ import Breadcrumbs from "../Modules/Breadcrumbs";
 import Product from "../Elements/Product";
 import ReactPaginate from 'react-paginate';
 //import { parse } from 'query-string';
+import { connect } from "react-redux";
+import { addToWishList } from "../../Store/Actions/WishList"
 
 class Category extends Component {
 
@@ -31,6 +33,8 @@ class Category extends Component {
         }
         this.handlePageClick =  this.handlePageClick.bind(this);
         this.handleSorting = this.handleSorting.bind(this);
+        this.scrollRef = React.createRef();
+        this.handleAddToWishlist = this.handleAddToWishlist.bind(this);
     }
 
     componentDidMount () {
@@ -42,6 +46,9 @@ class Category extends Component {
       if(prevProps.match.params.id !==  this.props.match.params.id) {
           this.setState({loading: true});
           this.fetchItems();
+          //window.scrollTo(0, 0);
+          window.scrollTo(0, this.scrollRef.current.offsetTop);
+          //this.scrollRef.scrollIntoView({behavior: 'smooth'});
       }
     }
 
@@ -126,6 +133,12 @@ class Category extends Component {
         console.log('testing');
     }
 
+    async handleAddToWishlist(id) {
+        let { dispatch } = this.props
+        console.log(id);
+        await dispatch(addToWishList(id));
+    }
+
     render() {
 
         const {loading, products, pages, filters} = this.state;
@@ -136,7 +149,7 @@ class Category extends Component {
         return (
             <React.Fragment>
                 <Breadcrumbs />
-                <div className="site-section">
+                <div className="site-section" ref={this.scrollRef}>
                     <div className="container">
                         <div className="row mb-5">
                             <div className="col-md-9 order-2">
@@ -154,7 +167,7 @@ class Category extends Component {
                                                 </ul>
                                             </div>           
                                             {
-                                                products.map( product => <Product key={product.id} product={product} /> )
+                                                products.map( product => <Product key={product.id} addWish={this.handleAddToWishlist} product={product} /> )
                                             }
                                         </>
                                         : "No Products found" 
@@ -193,4 +206,14 @@ class Category extends Component {
     }        
 }
 
-export default Category;
+function mapStateToProps(state) {
+	console.log("testingsta", state);
+	let { wishData } = state.wishlist;
+	return { 
+		wishData
+	}
+}
+
+export default connect(mapStateToProps)(Category);
+
+//export default Category;

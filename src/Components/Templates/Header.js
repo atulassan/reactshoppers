@@ -25,8 +25,10 @@ const Header = (props) => {
     }*/
 
     const cart = useSelector(state => state.cart);
+    const wish = useSelector(state => state.wishlist);
 
     console.log('cart Data', cart);
+    console.log('wish Data', wish);
 
     return (
         <div className="site-navbar header">
@@ -51,7 +53,12 @@ const Header = (props) => {
                             <div className="site-top-icons">
                                 <ul>
                                     <li><a href="/" target="#"><span className="icon icon-person"></span></a></li>
-                                    <li><a href="/"><span className="icon icon-heart-o"></span></a></li>
+                                    <li>
+                                        <Link to="/wishlist" className="site-cart">
+                                            <span className="icon icon-heart-o"></span>
+                                            <span className="count">{wish.wishData.length}</span>
+                                        </Link>
+                                    </li>
                                     <li>
                                         <Link to="/cart" className="site-cart">
                                             <span className="icon icon-shopping_cart"></span>
